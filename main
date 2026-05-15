@@ -4,13 +4,15 @@ def cadastro_animal(nome, especie, raca, idade, saude, chegada, comportamento, i
     dados_animais[id] = {
         "nome": nome,
         "especie": especie,
-        "raça": raca,
+        "raca": raca,
         "idade": idade,
         "saude": saude,
         "chegada": chegada,
         "comportamento": comportamento,
         "id": id
     }
+    
+    print("Cadastrado com sucesso!  ")
     
     return dados_animais    
 
@@ -30,14 +32,22 @@ def listar_animais():
         print(f"id:{j['id']}")
         
 def busca_especifica_nome(nome):
-    encontrado = False
-    for animal in dados_animais.values():
-        if animal['nome'].lower() == nome.lower():
-            print(f"\nAnimal encontrado: {animal['nome']}")
-            print(f" espécie: {animal['especie']} | ID: {animal['id']}")
-            encontrado = True
-            break
-    return
+    encontrados = []
+
+    for dados in dados_animais.values():
+        if dados['nome'].lower() == nome.lower():
+            encontrados.append(dados)
+    
+    if encontrados:
+        print(f"\nResultados para '{nome}': {len(encontrados)} encontrado(s)")
+        for animal in encontrados:
+            print(f"ID: {animal['id']}")
+            print(f"Nome: {animal['nome']}")
+            print(f"Espécie: {animal['especie']}")
+            print(f"Raça: {animal['raca']}")
+            print(f"Saúde: {animal['saude']}")
+    else:
+        print(f"\nNenhum animal chamado '{nome}' foi localizado.")
         
 def busca_especifica_id(id):
     animal = dados_animais.get(id)    
@@ -50,6 +60,7 @@ def busca_especifica_id(id):
         print(f" comportamento: {animal['comportamento']}")
     else:
         print(f"O animal de id {id} não foi localizado")
+        return False
     
 
 def editar_animal(id):
@@ -88,3 +99,65 @@ def excluir_animal(id):
             print('Operação cancelada.')
     else:
         print(f'O animal com id {id} não foi encontrado')
+
+while True:
+        # usei aspas triplas pra ficar mais legivel, dps podem trocar por \n se quiser
+    opcao = input("""
+O que você deseja fazer?
+
+1 - Cadastrar animal
+2 - Listar animais
+3 - Buscar animal por ID
+4 - Editar cadastro
+5 - Excluir cadastro
+
+    
+Escolha uma opção: \n """)
+    if opcao == '1' or 'cadastrar' in opcao:
+        # nome, especie, raca, idade, saude, chegada, comportamento, id
+        while True:
+         try:
+          nome = str(input("Digite o nome do animal: "))
+          especie = str(input("Digite a especie do animal: "))
+          raca = str(input("Digite a raça do animal: "))
+          idade = int(input("Digite a idade do animal: "))
+          saude = str(input("Digite o estado de saude do animal:"))
+          chegada = str(input("Digite a data de chegada do animal (formato dd/mm/aaaa):"))
+          comportamento = str(input("Digite o comportamento do cachorro: "))
+          id = int(input("digite o id do animal:"))
+          cadastro_animal(nome, especie, raca, idade, saude, chegada, comportamento, id)
+          break
+         except ValueError:
+             print("Algum dos dados inseridos foi invalido, tente novamente")
+             continue
+    
+    elif opcao == '2' or 'lista' in opcao:
+        listar_animais()
+        
+    elif opcao == '3' or 'buscar' in opcao or 'id' in opcao:
+      while True: 
+       try:
+        id = int(input("Digite o ID: "))
+        busca_especifica_id(id)
+        break
+       except ValueError:
+           print("Entrada invalida")
+           continue
+           
+      if busca_especifica_id == False:
+            escolha = str(input("Deseja buscar por nome?: "))
+            if escolha.lower() == 'sim' or escolha.lower() == 's':
+                nome_buscado = str(input("Digite o nome a ser buscado: "))
+                busca_especifica_nome(nome_buscado) 
+                
+    elif opcao == '4' or 'edita' in opcao:
+        id = input("Digite o id do cadastro a ser alterado: ")
+        editar_animal(id)
+            
+            
+    elif opcao == '5' or 'exclui' in opcao:
+        id = input('Digite o id do animal a ser excluido')
+        excluir_animal(id)
+    
+    else:
+        print('A opção selecionada não foi encontrada')
