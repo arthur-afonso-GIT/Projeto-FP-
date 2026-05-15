@@ -1,0 +1,90 @@
+dados_animais = {}
+
+def cadastro_animal(nome, especie, raca, idade, saude, chegada, comportamento, id):
+    dados_animais[id] = {
+        "nome": nome,
+        "especie": especie,
+        "raça": raca,
+        "idade": idade,
+        "saude": saude,
+        "chegada": chegada,
+        "comportamento": comportamento,
+        "id": id
+    }
+    
+    return dados_animais    
+
+
+
+def listar_animais():   
+    if not dados_animais:
+        print("Lista vazia. ")
+        return
+    
+    for i, j in dados_animais.items():
+        print(f' Animal: {i}')
+        print(f" espécie: {j['especie']}")
+        print(f" raça: {j['raca']}")
+        print(f" Estado de saúde: {j['saude']}")
+        print(f" comportamento: {j['comportamento']}")
+        print(f"id:{j['id']}")
+        
+def busca_especifica_nome(nome):
+    encontrado = False
+    for animal in dados_animais.values():
+        if animal['nome'].lower() == nome.lower():
+            print(f"\nAnimal encontrado: {animal['nome']}")
+            print(f" espécie: {animal['especie']} | ID: {animal['id']}")
+            encontrado = True
+            break
+    return
+        
+def busca_especifica_id(id):
+    animal = dados_animais.get(id)    
+    
+    if animal:
+        print(f"Animal encontrado: {id}")
+        print(f" espécie: {animal['especie']}")
+        print(f" raça: {animal['raca']}")
+        print(f" Estado de saúde: {animal['saude']}")
+        print(f" comportamento: {animal['comportamento']}")
+    else:
+        print(f"O animal de id {id} não foi localizado")
+    
+
+def editar_animal(id):
+    animal = dados_animais.get(id)
+    if animal:
+        print(f"Editando dados do animal: {animal['nome']} (ID: {id})")
+        print("Pressione Enter para manter o valor atual.")
+        
+        novo_nome = input(f"Novo nome [{animal['nome']}]: ") or animal['nome']
+        nova_especie = input(f"Nova espécie [{animal['especie']}]: ") or animal['especie']
+        nova_raca = input(f"Nova raça [{animal['raca']}]: ") or animal['raca']
+        nova_saude = input(f"Novo estado de saúde [{animal['saude']}]: ") or animal['saude']
+        novo_comportamento = input(f"Novo comportamento [{animal['comportamento']}]: ") or animal['comportamento']
+        
+        dados_animais[id] = {
+            'nome': novo_nome,
+            'especie': nova_especie,
+            'raca': nova_raca,
+            'saude': nova_saude,
+            'comportamento': novo_comportamento
+        }
+        
+        print(f"\nSucesso: O cadastro do animal {id} foi atualizado!")
+    else:
+        print(f"Erro: O animal de ID {id} não foi encontrado para edição.")
+    return dados_animais
+
+def excluir_animal(id):
+    animal = dados_animais.get(id)
+    if animal:
+        confirmacao = str(input(f"Deseja excluir os dados do animal {animal['nome']}?(sim ou não) "))
+        if confirmacao.lower() == 's' or confirmacao.lower() == 'sim':
+            del dados_animais[id]
+            print("Deletado com sucesso")
+        else:
+            print('Operação cancelada.')
+    else:
+        print(f'O animal com id {id} não foi encontrado')
