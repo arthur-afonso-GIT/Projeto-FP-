@@ -1,8 +1,30 @@
+import json
 dados_animais = {}
+
+def salvar_dados():
+    with open("dados_animais.json", "w") as dados:
+        json.dump(dados_animais, dados, indent=4)
+        
+        
+def carregar_dados():
+    global dados_animais
+
+    try:
+        with open("dados_animais.json", "r") as dados:
+            dados_animais = json.load(dados)
+
+            dados_animais = {
+                int(k): v for k, v in dados_animais.items()
+            }
+
+    except FileNotFoundError:
+        dados_animais = {}
+        
 
 def cadastro_animal(id,nome, especie, raca, idade, saude, chegada, comportamento):
     if id in dados_animais:
         print("ID ja cadastrado")
+        return
     dados_animais[id] = {
         "nome": nome,
         "especie": especie,
@@ -15,6 +37,7 @@ def cadastro_animal(id,nome, especie, raca, idade, saude, chegada, comportamento
     }
     
     print("Cadastrado com sucesso!  ")
+    salvar_dados(   )
     
     return dados_animais    
 
@@ -75,20 +98,25 @@ def editar_animal(id):
         novo_nome = input(f"Novo nome [{animal['nome']}]: ") or animal['nome']
         nova_especie = input(f"Nova espécie [{animal['especie']}]: ") or animal['especie']
         nova_raca = input(f"Nova raça [{animal['raca']}]: ") or animal['raca']
+        nova_idade = input(f"Nova idade [{animal['idade']}]: ") or animal['idade']
         nova_saude = input(f"Novo estado de saúde [{animal['saude']}]: ") or animal['saude']
         novo_comportamento = input(f"Novo comportamento [{animal['comportamento']}]: ") or animal['comportamento']
-        
+
         dados_animais[id] = {
             'nome': novo_nome,
             'especie': nova_especie,
             'raca': nova_raca,
+            'idade': nova_idade,
             'saude': nova_saude,
-            'comportamento': novo_comportamento
+            'chegada': animal['chegada'],
+            'comportamento': novo_comportamento,
+            'id': id
         }
         
         print(f"\nSucesso: O cadastro do animal {id} foi atualizado!")
     else:
         print(f"Erro: O animal de ID {id} não foi encontrado para edição.")
+    salvar_dados()
     return dados_animais
 
 def excluir_animal(id):
@@ -102,6 +130,8 @@ def excluir_animal(id):
             print('Operação cancelada.')
     else:
         print(f'O animal com id {id} não foi encontrado')
+        
+    salvar_dados()
 
 while True:
         # usei aspas triplas pra ficar mais legivel, dps podem trocar por \n se quiser
@@ -141,7 +171,6 @@ Escolha uma opção: \n """)
       while True: 
        try:
         id = int(input("Digite o ID: "))
-        busca_especifica_id(id)
         break
        except ValueError:
            print("Entrada invalida")
@@ -164,7 +193,7 @@ Escolha uma opção: \n """)
         id = int(input('Digite o id do animal a ser excluido: '))
         excluir_animal(id)
     
-    elif opcao == '6' or opcao.lower == 'sair':
+    elif opcao == '6' or opcao.lower() == 'sair':
         print("Encerrando sistema")
         break
     
