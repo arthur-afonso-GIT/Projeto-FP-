@@ -175,3 +175,94 @@ def excluir_animal(id):
         print(f'O animal com id {id} não foi encontrado')
         
     salvar_dados()
+    
+    
+def menu():
+
+    while True:
+        # usei aspas triplas pra ficar mais legivel, dps podem trocar por \n se quiser
+        opcao = input("""
+O que você deseja fazer?
+
+1 - Cadastrar animal
+2 - Cadastrar atividades
+3 - Listar animais
+4 - Listar atividades
+5 - Buscar animal por ID
+6 - Buscar atividade por animal
+7 - Editar cadastro
+8 - Editar atividade
+9 - Excluir cadastro
+10 - Excluir atividade
+11 - Sair
+    
+Escolha uma opção: \n """)
+
+        if opcao == '1' or 'cadastrar' in opcao.lower():
+
+            # id, nome, especie, raca, idade, saude, chegada, comportamento
+            while True:
+                try:
+                    id = int(input("Digite o id do animal: "))
+                    nome = str(input("Digite o nome do animal: "))
+                    especie = str(input("Digite a especie do animal: "))
+                    raca = str(input("Digite a raça do animal: "))
+                    idade = int(input("Digite a idade do animal: "))
+                    saude = str(input("Digite o estado de saude do animal: "))
+                    chegada = str(input("Digite a data de chegada do animal (formato dd/mm/aaaa): "))
+                    comportamento = str(input("Digite o comportamento do cachorro: "))
+
+                    cadastro_animal(
+                        id,
+                        nome,
+                        especie,
+                        raca,
+                        idade,
+                        saude,
+                        chegada,
+                        comportamento
+                    )
+
+                    break
+
+                except ValueError:
+                    print("Algum dos dados inseridos foi invalido, tente novamente")
+                    continue
+
+        elif opcao == '3' or 'lista animais' in opcao.lower():
+            listar_animais()
+
+        elif opcao == '5' or 'buscar' in opcao.lower() or 'id' in opcao.lower():
+
+            while True:
+                try:
+                    id = int(input("Digite o ID: "))
+                    break
+
+                except ValueError:
+                    print("Entrada invalida")
+                    continue
+
+            resultado = busca_especifica_id(id)
+
+            if resultado == False:
+                escolha = str(input("Deseja buscar por nome?: "))
+
+                if escolha.lower() == 'sim' or escolha.lower() == 's':
+                    nome_buscado = str(input("Digite o nome a ser buscado: "))
+                    busca_especifica_nome(nome_buscado)
+
+        elif opcao == '7' or 'editar' in opcao.lower():
+            id = int(input("Digite o id do cadastro a ser alterado: "))
+            editar_animal(id)
+
+        elif opcao == '9' or 'exclui' in opcao.lower():
+            id = int(input('Digite o id do animal a ser excluido: '))
+            excluir_animal(id)
+
+        elif opcao == '11' or 'sair' in opcao.lower():
+            print("Encerrando sistema")
+            break
+
+        else:
+            print('A opção selecionada não foi encontrada')
