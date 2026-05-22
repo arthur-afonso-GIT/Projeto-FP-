@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 def salvar_dados():
     with open("dados_animais.json", "w") as dados:
         json.dump(dados_animais, dados, indent=4)
@@ -35,11 +36,18 @@ def carregar_dados():
     except FileNotFoundError:
         dados_atividades = {}
 
+def gerar_id():
+    return int(agora.strftime("%d%m%H%M%S"))
 # item 1
-def cadastro_animal(id,nome, especie, raca, idade, saude, chegada, comportamento):
+def cadastro_animal(nome, especie, raca, idade, saude, chegada, comportamento):
+    
+    id = gerar_id()
+    
     if id in dados_animais:
         print("ID ja cadastrado")
         return
+    
+    
     dados_animais[id] = {
         "nome": nome,
         "especie": especie,
@@ -52,6 +60,7 @@ def cadastro_animal(id,nome, especie, raca, idade, saude, chegada, comportamento
     }
     
     print("Cadastrado com sucesso!  ")
+    print(f"Seu ID é: {id}")
     salvar_dados(   )
     
     return dados_animais    
@@ -140,7 +149,11 @@ def editar_animal(id):
         novo_nome = input(f"Novo nome [{animal['nome']}]: ") or animal['nome']
         nova_especie = input(f"Nova espécie [{animal['especie']}]: ") or animal['especie']
         nova_raca = input(f"Nova raça [{animal['raca']}]: ") or animal['raca']
-        nova_idade = input(f"Nova idade [{animal['idade']}]: ") or animal['idade']
+        nova_idade = input(f"Nova idade [{animal['idade']}]: ")
+        if nova_idade == "":
+            nova_idade = animal['idade']
+        else:
+            nova_idade = int(nova_idade)   
         nova_saude = input(f"Novo estado de saúde [{animal['saude']}]: ") or animal['saude']
         novo_comportamento = input(f"Novo comportamento [{animal['comportamento']}]: ") or animal['comportamento']
 
@@ -177,6 +190,57 @@ def excluir_animal(id):
     salvar_dados()
     
     
+def cadastrar_animal_menu():
+
+    while True:
+        try:
+
+            nome = str(input("Digite o nome do animal: "))
+            especie = str(input("Digite a especie do animal: "))
+            raca = str(input("Digite a raça do animal: "))
+            idade = int(input("Digite a idade do animal: "))
+            saude = str(input("Digite o estado de saude do animal: "))
+            chegada = str(input("Digite a data de chegada do animal (formato dd/mm/aaaa): "))
+            comportamento = str(input("Digite o comportamento do cachorro: "))
+
+            cadastro_animal(
+                nome,
+                especie,
+                raca,
+                idade,
+                saude,
+                chegada,
+                comportamento
+            )
+
+            break
+
+        except ValueError:
+            print("Algum dos dados inseridos foi invalido")    
+            
+def buscar_animal_menu():
+
+    while True:
+        try:
+            id = int(input("Digite o ID: "))
+            break
+
+        except ValueError:
+            print("Entrada invalida")
+
+    resultado = busca_especifica_id(id)
+
+    if resultado == False:
+
+        escolha = input("Deseja buscar por nome?: ")
+
+        if escolha.lower() == 'sim' or escolha.lower() == 's':
+
+            nome_buscado = input("Digite o nome a ser buscado: ")
+
+            busca_especifica_nome(nome_buscado)
+    
+    
 def menu():
 
     while True:
@@ -199,58 +263,13 @@ O que você deseja fazer?
 Escolha uma opção: \n """)
 
         if opcao == '1' or 'cadastrar' in opcao.lower():
-
-            # id, nome, especie, raca, idade, saude, chegada, comportamento
-            while True:
-                try:
-                    id = int(input("Digite o id do animal: "))
-                    nome = str(input("Digite o nome do animal: "))
-                    especie = str(input("Digite a especie do animal: "))
-                    raca = str(input("Digite a raça do animal: "))
-                    idade = int(input("Digite a idade do animal: "))
-                    saude = str(input("Digite o estado de saude do animal: "))
-                    chegada = str(input("Digite a data de chegada do animal (formato dd/mm/aaaa): "))
-                    comportamento = str(input("Digite o comportamento do cachorro: "))
-
-                    cadastro_animal(
-                        id,
-                        nome,
-                        especie,
-                        raca,
-                        idade,
-                        saude,
-                        chegada,
-                        comportamento
-                    )
-
-                    break
-
-                except ValueError:
-                    print("Algum dos dados inseridos foi invalido, tente novamente")
-                    continue
+            cadastrar_animal_menu()
 
         elif opcao == '3' or 'lista animais' in opcao.lower():
             listar_animais()
 
         elif opcao == '5' or 'buscar' in opcao.lower() or 'id' in opcao.lower():
-
-            while True:
-                try:
-                    id = int(input("Digite o ID: "))
-                    break
-
-                except ValueError:
-                    print("Entrada invalida")
-                    continue
-
-            resultado = busca_especifica_id(id)
-
-            if resultado == False:
-                escolha = str(input("Deseja buscar por nome?: "))
-
-                if escolha.lower() == 'sim' or escolha.lower() == 's':
-                    nome_buscado = str(input("Digite o nome a ser buscado: "))
-                    busca_especifica_nome(nome_buscado)
+            buscar_animal_menu()
 
         elif opcao == '7' or 'editar' in opcao.lower():
             id = int(input("Digite o id do cadastro a ser alterado: "))
