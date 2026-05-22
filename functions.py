@@ -37,6 +37,7 @@ def carregar_dados():
         dados_atividades = {}
 
 def gerar_id():
+    agora = datetime.now()
     return int(agora.strftime("%d%m%H%M%S"))
 # item 1
 def cadastro_animal(nome, especie, raca, idade, saude, chegada, comportamento):
