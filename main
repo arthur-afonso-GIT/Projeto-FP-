@@ -49,6 +49,9 @@ def listar_animais():
         return
     
     for i, j in dados_animais.items():
+        print(f" nome: {j['nome']}")
+        print(f" idade: {j['idade']}")
+        print(f" chegada: {j['chegada']}")
         print(f' Animal: {i}')
         print(f" espécie: {j['especie']}")
         print(f" raça: {j['raca']}")
@@ -79,15 +82,16 @@ def busca_especifica_id(id):
     
     if animal:
         print(f"Animal encontrado: {id}")
+        print(f" Nome: {animal['nome']}")
         print(f" espécie: {animal['especie']}")
         print(f" raça: {animal['raca']}")
+        print(f" Idade: {animal['idade']}")
         print(f" Estado de saúde: {animal['saude']}")
         print(f" comportamento: {animal['comportamento']}")
         return True
     else:
         print(f"O animal de id {id} não foi localizado")
         return False
-    
 
 def editar_animal(id):
     animal = dados_animais.get(id)
@@ -98,7 +102,7 @@ def editar_animal(id):
         novo_nome = input(f"Novo nome [{animal['nome']}]: ") or animal['nome']
         nova_especie = input(f"Nova espécie [{animal['especie']}]: ") or animal['especie']
         nova_raca = input(f"Nova raça [{animal['raca']}]: ") or animal['raca']
-        nova_idade = input(f"Nova idade [{animal['idade']}]: ") or animal['idade']
+        nova_idade = int(input(f"Nova idade [{animal['idade']}]: ")) or animal['idade']
         nova_saude = input(f"Novo estado de saúde [{animal['saude']}]: ") or animal['saude']
         novo_comportamento = input(f"Novo comportamento [{animal['comportamento']}]: ") or animal['comportamento']
 
@@ -133,6 +137,8 @@ def excluir_animal(id):
         
     salvar_dados()
 
+
+carregar_dados()
 while True:
         # usei aspas triplas pra ficar mais legivel, dps podem trocar por \n se quiser
     opcao = input("""
@@ -179,7 +185,7 @@ Escolha uma opção: \n """)
       resultado = busca_especifica_id(id)
         
       if resultado == False:
-            escolha = str(input("Deseja buscar por nome?: "))
+            escolha = str(input("Deseja busc    ar por nome?: "))
             if escolha.lower() == 'sim' or escolha.lower() == 's':
                 nome_buscado = str(input("Digite o nome a ser buscado: "))
                 busca_especifica_nome(nome_buscado) 
