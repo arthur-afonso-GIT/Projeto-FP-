@@ -49,9 +49,6 @@ def listar_animais():
         return
     
     for i, j in dados_animais.items():
-        print(f" nome: {j['nome']}")
-        print(f" idade: {j['idade']}")
-        print(f" chegada: {j['chegada']}")
         print(f' Animal: {i}')
         print(f" espécie: {j['especie']}")
         print(f" raça: {j['raca']}")
@@ -82,16 +79,15 @@ def busca_especifica_id(id):
     
     if animal:
         print(f"Animal encontrado: {id}")
-        print(f" Nome: {animal['nome']}")
         print(f" espécie: {animal['especie']}")
         print(f" raça: {animal['raca']}")
-        print(f" Idade: {animal['idade']}")
         print(f" Estado de saúde: {animal['saude']}")
         print(f" comportamento: {animal['comportamento']}")
         return True
     else:
         print(f"O animal de id {id} não foi localizado")
         return False
+    
 
 def editar_animal(id):
     animal = dados_animais.get(id)
@@ -102,7 +98,7 @@ def editar_animal(id):
         novo_nome = input(f"Novo nome [{animal['nome']}]: ") or animal['nome']
         nova_especie = input(f"Nova espécie [{animal['especie']}]: ") or animal['especie']
         nova_raca = input(f"Nova raça [{animal['raca']}]: ") or animal['raca']
-        nova_idade = int(input(f"Nova idade [{animal['idade']}]: ")) or animal['idade']
+        nova_idade = input(f"Nova idade [{animal['idade']}]: ") or animal['idade']
         nova_saude = input(f"Novo estado de saúde [{animal['saude']}]: ") or animal['saude']
         novo_comportamento = input(f"Novo comportamento [{animal['comportamento']}]: ") or animal['comportamento']
 
@@ -145,11 +141,16 @@ while True:
 O que você deseja fazer?
 
 1 - Cadastrar animal
-2 - Listar animais
-3 - Buscar animal por ID
-4 - Editar cadastro
-5 - Excluir cadastro
-6 - Sair
+2 - Cadastrar atividades
+3 - Listar animais
+4 - Listar atividades
+5 - Buscar animal por ID
+6 - Buscar atividade por animal
+7 - Editar cadastro
+8 - editar atividade
+9 - Excluir cadastro
+10 - Excluir atividade
+11 - Sair
     
 Escolha uma opção: \n """)
     if opcao == '1' or 'cadastrar' in opcao.lower():
@@ -170,10 +171,10 @@ Escolha uma opção: \n """)
              print("Algum dos dados inseridos foi invalido, tente novamente")
              continue
     
-    elif opcao == '2' or 'lista' in opcao.lower():
+    elif opcao == '3' or 'lista animais' in opcao.lower():
         listar_animais()
         
-    elif opcao == '3' or 'buscar' in opcao.lower() or 'id' in opcao.lower():
+    elif opcao == '5' or 'buscar' in opcao.lower() or 'id' in opcao.lower():
       while True: 
        try:
         id = int(input("Digite o ID: "))
@@ -190,16 +191,16 @@ Escolha uma opção: \n """)
                 nome_buscado = str(input("Digite o nome a ser buscado: "))
                 busca_especifica_nome(nome_buscado) 
                 
-    elif opcao == '4' or 'edita' in opcao.lower():
+    elif opcao == '7' or 'editar' in opcao.lower():
         id = int(input("Digite o id do cadastro a ser alterado: "))
         editar_animal(id)
             
             
-    elif opcao == '5' or 'exclui' in opcao.lower():
+    elif opcao == '9' or 'exclui' in opcao.lower():
         id = int(input('Digite o id do animal a ser excluido: '))
         excluir_animal(id)
     
-    elif opcao == '6' or opcao.lower() == 'sair':
+    elif opcao == '11' or 'sair' in opcao.lower():
         print("Encerrando sistema")
         break
     
