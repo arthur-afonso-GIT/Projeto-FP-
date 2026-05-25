@@ -317,7 +317,7 @@ def menu_busca_atividade():
         else:
             print("valor inválido")
             
-    def menu():
+def menu():
 
      while True:
 
@@ -384,5 +384,3 @@ Escolha uma opção: \n """)
         else:
 
             print('A opção selecionada não foi encontrada')
-
-menu()
