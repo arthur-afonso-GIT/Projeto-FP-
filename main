@@ -1,4 +1,11 @@
-from functions import carregar_dados, menu
+import all_functions as af
 
-carregar_dados()
-menu()
+dados_animais=[]
+dados_atividades=[]
+
+af.criar_dados_animais()
+af.criar_dados_atividades()
+
+af.carregar_dados()
+af.carregar_dados_atv()
+af.menu()
