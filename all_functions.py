@@ -316,3 +316,73 @@ def menu_busca_atividade():
 
         else:
             print("valor inválido")
+            
+    def menu():
+
+     while True:
+
+        # usei aspas triplas pra ficar mais legivel, dps podem trocar por \n se quiser
+        opcao = input("""
+O que você deseja fazer?
+
+1 - Cadastrar animal
+2 - Cadastrar atividades
+3 - Listar animais
+4 - Listar atividades
+5 - Buscar animal por ID
+6 - Buscar atividade por animal
+7 - Editar cadastro
+8 - Editar atividade
+9 - Excluir cadastro
+10 - Excluir atividade
+11 - Sair
+    
+Escolha uma opção: \n """)
+
+        if opcao == '1' or 'cadastrar' in opcao.lower():
+
+            menu_cadastro_animal()
+
+        elif opcao == '2' or 'cadastrar atividades' in opcao.lower():
+
+            menu_cadastro_atividade()
+
+        elif opcao == '3' or 'lista animais' in opcao.lower():
+
+            listar_animais()
+
+        elif opcao == '4' or 'lista atividades' in opcao.lower():
+
+            listar_atividades()
+
+        elif opcao == '5' or 'buscar animal' in opcao.lower() or 'id animal' in opcao.lower():
+
+            menu_busca_animal()
+
+        elif opcao == '6' or 'buscar atividade' in opcao.lower() or 'id atividade' in opcao.lower():
+
+            menu_busca_atividade()
+
+        elif opcao == '7' or 'editar animal' in opcao.lower():
+
+            id = int(input("Digite o id do cadastro a ser alterado: "))
+
+            editar_animal(id)
+
+        elif opcao == '9' or 'exclui' in opcao.lower():
+
+            id = int(input('Digite o id do animal a ser excluido: '))
+
+            excluir_i(id)
+
+        elif opcao == '11' or 'sair' in opcao.lower():
+
+            print("Encerrando sistema")
+
+            break
+
+        else:
+
+            print('A opção selecionada não foi encontrada')
+
+menu()
