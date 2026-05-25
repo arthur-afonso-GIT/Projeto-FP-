@@ -190,175 +190,129 @@ def excluir_i(id):
     salvar_dados()
     
     
-def menu():
+def menu_cadastro_animal():
 
     while True:
-        # usei aspas triplas pra ficar mais legivel, dps podem trocar por \n se quiser
-        opcao = input("""
-O que você deseja fazer?
+        try:
+            id = int(input("Digite o id do animal: "))
+            nome = str(input("Digite o nome do animal: "))
+            especie = str(input("Digite a especie do animal: "))
+            raca = str(input("Digite a raça do animal: "))
+            idade = int(input("Digite a idade do animal: "))
+            saude = str(input("Digite o estado de saude do animal: "))
+            chegada = str(input("Digite a data de chegada do animal (formato dd/mm/aaaa): "))
+            comportamento = str(input("Digite o comportamento do animal: "))
 
-1 - Cadastrar animal
-2 - Cadastrar atividades
-3 - Listar animais
-4 - Listar atividades
-5 - Buscar animal por ID
-6 - Buscar atividade por animal
-7 - Editar cadastro
-8 - Editar atividade
-9 - Excluir cadastro
-10 - Excluir atividade
-11 - Sair
-    
-Escolha uma opção: \n """)
+            cadastro_animal(
+                id,
+                nome,
+                especie,
+                raca,
+                idade,
+                saude,
+                chegada,
+                comportamento
+            )
 
-        if opcao == '1' or 'cadastrar' in opcao.lower():
+            break
 
-            # id, nome, especie, raca, idade, saude, chegada, comportamento
+        except ValueError:
+            print("Algum dos dados inseridos foi invalido, tente novamente")
+
+
+def menu_cadastro_atividade():
+
+    while True:
+        try:
+            id = int(input("Digite o id do animal: "))
+            id_atv = int(input("Digite o id da atividade: "))
+            nome_atv = str(input("Digite o nome da atividade: "))
+            data = str(input("Digite a data de realização do serviço (formato dd/mm/aaaa): "))
+            responsavel = str(input("Digite o nome do responsável: "))
+
+            cadastro_atividade(
+                id,
+                id_atv,
+                nome_atv,
+                data,
+                responsavel
+            )
+
+            break
+
+        except ValueError:
+            print("Algum dos dados inseridos foi invalido, tente novamente")
+
+
+def menu_busca_animal():
+
+    while True:
+
+        escolha = input(
+            "tipo de busca:\n"
+            "1-nome\n"
+            "2-ID\n"
+        )
+
+        if escolha == '1' or escolha.lower() == "nome":
+
+            nome_buscado = str(input("Digite o nome a ser buscado: "))
+
+            busca_especifica_nome(nome_buscado)
+
+            break
+
+        elif escolha == '2' or escolha.lower() == "id":
+
             while True:
-                try:
-                    id = int(input("Digite o id do animal: "))
-                    nome = str(input("Digite o nome do animal: "))
-                    especie = str(input("Digite a especie do animal: "))
-                    raca = str(input("Digite a raça do animal: "))
-                    idade = int(input("Digite a idade do animal: "))
-                    saude = str(input("Digite o estado de saude do animal: "))
-                    chegada = str(input("Digite a data de chegada do animal (formato dd/mm/aaaa): "))
-                    comportamento = str(input("Digite o comportamento do animal: "))
-                    break
-                except ValueError:
-                    print("Algum dos dados inseridos foi invalido, tente novamente")
-                    continue
-                cadastro_animal(
-                    id,
-                    nome,
-                    especie,
-                    raca,
-                    idade,
-                    saude,
-                    chegada,
-                    comportamento
-                )
-
-        elif opcao=='2' or 'cadastrar atividades' in opcao.lower():
-            while True:
-                try:
-                    id = int(input("Digite o id do animal: "))
-                    id_atv = int(input("Digite o id da atividade: "))
-                    nome_atv = str(input("Digite o nome da atividade: "))
-                    data = str(input("Digite a data de realização do serviço (formato dd/mm/aaaa):"))
-                    responsavel = str(input("Digite o nome do responsável:"))
-                    cadastro_atividade(id, id_atv, nome_atv, data, responsavel)
-
-                    break
-                except ValueError:
-                    print("Algum dos dados inseridos foi invalido, tente novamente")
-                    continue
-
-        elif opcao == '3' or 'lista animais' in opcao.lower():
-            listar_animais()
-        elif opcao == '4' or 'lista atividades' in opcao.lower():
-            listar_atividades()
-        elif opcao == '5' or 'buscar animal' in opcao.lower() or 'id animal' in opcao.lower():
-            while True:
-                escolha=input("tipo de busca:\n1-nome\n2-ID")
-                if escolha == 1 or escolha.lower() == "nome":
-                    escolha=0
-                    break
-                elif escolha == 2 or escolha.lower() == "id":
-                    escolha=1
-                    break
-                else:
-                    print("valor inválido")
-
-            while escolha==0:
                 try:
                     id = int(input("Digite o ID: "))
+
+                    busca_especifica_id(id)
+
                     break
 
                 except ValueError:
                     print("Entrada invalida")
-                    continue
 
-            busca_especifica_id(id)
-
-            while escolha == 1:
-
-                try:
-                    nome_buscado = str(input("Digite o nome a ser buscado: "))
-                    busca_especifica_nome(nome_buscado)
-                    break
-                except ValueError:
-                    print("Animal não registrado")
-                    continue
-
-
-        elif opcao == '6' or 'buscar atividade' in opcao.lower() or 'id atividade' in opcao.lower():
-            while True:
-                escolha=input("forma de busca: \n1-ID do animal\n2-Nome da atividade")
-                if escolha == 1 or escolha.lower() == "id":
-                    break
-                elif escolha == 2 or escolha.lower() == "nome":
-                    break
-                else:
-                    print("valor inválido")
-
-            while escolha==1:
-                try:
-                    id = int(input("Digite o ID: "))
-                    break
-
-                except ValueError:
-                    print("Entrada invalida")
-                    continue
-
-            busca_atv_id_i(id)
-
-            while escolha == 2:
-
-                try:
-                    nome_atv = str(input("Digite o nome a ser buscado: "))
-                    busca_atv_nome_atividade(nome_atv)
-                    break
-                except ValueError:
-                    print("nome não registrado")
-                    continue
-
-        elif opcao == '7' or 'editar animal' in opcao.lower():
-            id = int(input("Digite o id do cadastro a ser alterado: "))
-            while True:
-                quant=int(input("Digite quantas alterações deseja fazer?"))
-                if quant>=1 and quant<=7:
-                    while quant>0:
-                        escolha=int(input(f"Quantidade de itens a alterar {quant}\n\nEscolha um item para o alterar\n1-Nome do animal\n2-Espécie do animal\n3-idade do animal\n4-Raça do animal\n5-Saúde do animal\n6-Data de chegada do animal\n7-Comportamento do animal"))
-                        if escolha==1:
-                            nome=input("Digite o novo nome: ")
-                        elif escolha==1:
-                            nome=input("Digite o novo nome: ")
-                        elif escolha==2:
-                            especie=input("Digite a nova espécie: ")
-                        elif escolha==3:
-                            idade=input("Digite a nova idade: ")
-                        elif escolha==4:
-                            nome=input("Digite o novo nome: ")
-                        elif escolha==5:
-                            nome=input("Digite o novo nome: ")
-                        elif escolha==6:
-                            nome=input("Digite o novo nome: ")
-                        elif escolha==7:
-                            nome=input("Digite o novo nome: ")
-                        else:
-                            print("escolha inválida")
-                    break
-#nome, especie, raca, idade, saude, chegada, comportamento,
-            editar_animal(id, nome, especie, raca, idade, saude, chegada, comportamento,)
-
-        elif opcao == '9' or 'exclui' in opcao.lower():
-            id = int(input('Digite o id do i a ser excluido: '))
-            excluir_i(id)
-
-        elif opcao == '11' or 'sair' in opcao.lower():
-            print("Encerrando sistema")
             break
 
         else:
-            print('A opção selecionada não foi encontrada')
+            print("valor inválido")
+
+
+def menu_busca_atividade():
+
+    while True:
+
+        escolha = input(
+            "forma de busca:\n"
+            "1-ID do animal\n"
+            "2-Nome da atividade\n"
+        )
+
+        if escolha == '1' or escolha.lower() == "id":
+
+            while True:
+                try:
+                    id = int(input("Digite o ID: "))
+
+                    busca_atv_id_i(id)
+
+                    break
+
+                except ValueError:
+                    print("Entrada invalida")
+
+            break
+
+        elif escolha == '2' or escolha.lower() == "nome":
+
+            nome_atv = str(input("Digite o nome a ser buscado: "))
+
+            busca_atv_nome_atividade(nome_atv)
+
+            break
+
+        else:
+            print("valor inválido")
