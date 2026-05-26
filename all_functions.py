@@ -1,5 +1,6 @@
 import csv
 import os
+from datetime import datetime
 
 def criar_dados_animais():
     with open("dados_animais.csv", "w", newline="", encoding="utf-8") as dados:
@@ -48,7 +49,7 @@ def cadastro_animal(id,nome, especie, raca, idade, saude, chegada, comportamento
     dados_animal=[id, nome, especie, raca, idade, saude, chegada, comportamento]
     salvar_dados(dados_animal)
     print("Cadastrado com sucesso!  ")
-    dados_animais[id_string] = dados_animal   
+      
 
 #item 2
 def cadastro_atividade(id,id_atv, nome_atv, data, responsavel):
@@ -68,7 +69,6 @@ def listar_animais():
         return
     
     for i in dados_animais:
-        if i>0:
             print(f" id: {i[0]}")
             print(f" espécie: {i[1]}")
             print(f" raça: {i[2]}")
@@ -269,6 +269,7 @@ def menu_busca_animal():
                     id = int(input("Digite o ID: "))
 
                     busca_especifica_id(id)
+                    contagem_regressiva_alertas(id)
 
                     break
 
@@ -384,3 +385,35 @@ Escolha uma opção: \n """)
         else:
 
             print('A opção selecionada não foi encontrada')
+def contagem_regressiva_alertas(id):
+    carregar_dados_atv()
+    string_id = str(id)
+    animais_encontrados = []
+    for i in dados_atividades[1:]:
+        if i[0] == string_id:
+            animais_encontrados.append(i)
+    if not animais_encontrados:
+        print(f"Nenhuma atividade pendente foi encontrada para este respectivo animal")
+        return
+    print(f"\n---- ALERTAS PARA O ANIMAL COM ID {id} ---\n")
+    dia_hoje = datetime.today()
+    for i in animais_encontrados:
+        try:
+            nome_atv = i[2]
+            data_atv = datetime.strptime(i[3], "%d/%m/%Y")
+            responsavel_animal = i[4]
+            diferenca_dias = (data_atv - dia_hoje).days 
+            if diferenca_dias < 0:
+                print(f"ATRASADA --> {nome_atv} | Responsável pelo animal: {responsavel_animal} | Consulta prevista há: {abs(diferenca_dias)} dia(s)")
+            elif diferenca_dias == 0:
+                print(f"É HOJE A CONSULTA --> {nome_atv} | Responsável pelo animal: {responsavel_animal} | Consulta prevista para hoje.")
+            elif diferenca_dias <=7:
+                print(f"FALTA POUCO TEMPO --> {nome_atv} | Responsável pelo animal: {responsavel_animal} | Consulta prevista para {diferenca_dias} dia(s)")
+            else:
+                print(f"AINDA HÁ TEMPO --> {nome_atv} | Responsável pelo animal: {responsavel_animal} | Consulta prevista para {diferenca_dias} dia(s)")
+        except ValueError:
+            print(f"Data inválida na atividade '{i[2]}', vamos pular isso.")
+            continue
+
+            
+
