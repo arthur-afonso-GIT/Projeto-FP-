@@ -42,17 +42,32 @@ def carregar_dados_atv():
 def cadastro_animal(id,nome, especie, raca, idade, saude, chegada, comportamento):
     dados_animais=carregar_dados()
     id_string=str(id)
-    if id_string in dados_animais:
-        print("ID ja cadastrado")
-        return
-    dados_animal=[id, nome, especie, raca, idade, saude, chegada, comportamento]
-    salvar_dados(dados_animal)
-    print("Cadastrado com sucesso!  ")
-    dados_animais[id_string] = dados_animal   
+    existe=0
+    for i in dados_animais:
+        if id_string in i:
+            print("ID ja cadastrado")
+            existe=1
+    if existe==0:
+        dados_animal=[id, nome, especie, raca, idade, saude, chegada, comportamento]
+        salvar_dados(dados_animal)
+        print("Cadastrado com sucesso!  ")
 
 #item 2
 def cadastro_atividade(id,id_atv, nome_atv, data, responsavel):
-    if id in dados_animais:
+    dados_atividades=carregar_dados_atv()
+    dados_animais=carregar_dados()
+    id_string=str(id)
+    existe=0
+    existe_animal=0
+    for i in dados_animais:
+        if id in i:
+            print("id inválido\n")
+            existe_animal=1
+    for i in dados_atividades:
+        if id_atv in i:
+            print("id da atividade inválido\n")
+            existe=1
+    if existe ==0 and existe_animal==1:
         dados_atividades=[id,id_atv, nome_atv, data, responsavel]
         print("Cadastrado com sucesso!\n")
         salvar_atividades(dados_atividades)
@@ -63,42 +78,38 @@ def cadastro_atividade(id,id_atv, nome_atv, data, responsavel):
 # item 3
 def listar_animais():   
     dados_animais=carregar_dados()
-    if not dados_animais:
-        print("Lista vazia. ")
-        return
-    
+    existe=0
     for i in dados_animais:
-        if i>0:
-            print(f" id: {i[0]}")
-            print(f" espécie: {i[1]}")
-            print(f" raça: {i[2]}")
-            print(f" Estado de saúde: {i[3]}")
-            print(f" comportamento: {i[4]}")
-            print(f" Nome: {i[5]}")
-
+            if existe>0:
+                print(f" id: {i[0]}")
+                print(f" espécie: {i[1]}")
+                print(f" raça: {i[2]}")
+                print(f" Estado de saúde: {i[3]}")
+                print(f" comportamento: {i[4]}")
+                print(f" Nome: {i[5]}")
+                existe+=1
 #item 4
 def listar_atividades():
-    if not dados_atividades:
-        print("Lista vazia. ")
-        return
-    
+    dados_atividades=carregar_dados_atv()
+    existe=0
     for i in dados_atividades:
-        print(f" id da atividade: {i[0]}")
-        print(f" id do i: {i[1]}")
-        print(f" Nome da atividade:{i[2]}")
-        print(f" Data da atividade:{i[3]}")
-        print(f" Nome do responsável:{i[4]}")
+            print(f" id da atividade: {i[0]}")
+            print(f" id do i: {i[1]}")
+            print(f" Nome da atividade:{i[2]}")
+            print(f" Data da atividade:{i[3]}")
+            print(f" Nome do responsável:{i[4]}")
+            existe+=1
 
 # item 5
 def busca_especifica_nome(nome):
-    encontrados = [[]]
-
-    for dados in dados_animais.values():
-        if dados['nome'].lower() == nome.lower():
-            encontrados.append(dados)
+    encontrados = []
+    dados_animais=carregar_dados()
+    for i in dados_animais:
+        if i[1].lower() == nome.lower():
+            encontrados.append(i)
     
-    if encontrados:
-        print(f"\nResultados para '{nome}': {len(encontrados)} encontrado(s)")
+    if len(encontrados)!=0:
+        print(f"\nResultados para {nome}: {len(encontrados)} encontrado(s)")
         for i in encontrados:
             print(f"ID: {i[0]}")
             print(f"Nome: {i[1]}")
@@ -110,20 +121,23 @@ def busca_especifica_nome(nome):
 
 # item 5
 def busca_especifica_id(id):
+    id_string=str(id)
+    dados_animais=carregar_dados()
+    existe=0
     for i in dados_animais:
-        if id in i:
+        if id_string==i[0]:
             print(f"Animal encontrado: {i[0]}")
             print(f" espécie: {i[1]}")
             print(f" raça: {i[2]}")
             print(f" Estado de saúde: {i[3]}")
             print(f" comportamento: {i[4]}")
-            return True
-    else:
-        print(f"O animal de id {id} não foi localizado")
-        return False
+            existe=1
+    if existe==0:
+        print(f"O animal de ID {id} não foi localizado")
 
 # item 6
 def busca_atv_id_i(id):
+    dados_atividades=carregar_dados_atv()
     for i in dados_atividades:
         if id in i:
             print(f" ID da atividade: {i[0]}")
@@ -136,6 +150,7 @@ def busca_atv_id_i(id):
 
 # item 6
 def busca_atv_nome_atividade(nome_atv):
+    dados_atividades=carregar_dados_atv()
     for i in dados_atividades:
         if nome_atv in i:
             print(f" ID do do animal: {i[0]}")
@@ -148,6 +163,7 @@ def busca_atv_nome_atividade(nome_atv):
     
 # item 7
 def editar_animal(id,nome, especie, raca, idade, saude, chegada, comportamento):
+    dados_animais=carregar_dados()
     temp_dados_animais=[]
     string_id=str(id)
     for i in dados_animais:
