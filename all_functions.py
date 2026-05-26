@@ -317,7 +317,37 @@ def menu_busca_atividade():
 
         else:
             print("valor inválido")
-            
+
+
+def contagem_regressiva_alertas(id):
+    carregar_dados_atv()
+    string_id = str(id)
+    animais_encontrados = []
+    for i in dados_atividades[1:]:
+        if i[0] == string_id:
+            animais_encontrados.append(i)
+    if not animais_encontrados:
+        print(f"Nenhuma atividade pendente foi encontrada para este respectivo animal")
+        return
+    print(f"\n---- ALERTAS PARA O ANIMAL COM ID {id} ---\n")
+    dia_hoje = datetime.today()
+    for i in animais_encontrados:
+        try:
+            nome_atv = i[2]
+            data_atv = datetime.strptime(i[3], "%d/%m/%Y")
+            responsavel_animal = i[4]
+            diferenca_dias = (data_atv - dia_hoje).days 
+            if diferenca_dias < 0:
+                print(f"ATRASADA --> {nome_atv} | Responsável pelo animal: {responsavel_animal} | Consulta prevista há: {abs(diferenca_dias)} dia(s)")
+            elif diferenca_dias == 0:
+                print(f"É HOJE A CONSULTA --> {nome_atv} | Responsável pelo animal: {responsavel_animal} | Consulta prevista para hoje.")
+            elif diferenca_dias <=7:
+                print(f"FALTA POUCO TEMPO --> {nome_atv} | Responsável pelo animal: {responsavel_animal} | Consulta prevista para {diferenca_dias} dia(s)")
+            else:
+                print(f"AINDA HÁ TEMPO --> {nome_atv} | Responsável pelo animal: {responsavel_animal} | Consulta prevista para {diferenca_dias} dia(s)")
+        except ValueError:
+            print(f"Data inválida na atividade '{i[2]}', vamos pular isso.")
+            continue     
 def menu():
 
      while True:
@@ -385,35 +415,7 @@ Escolha uma opção: \n """)
         else:
 
             print('A opção selecionada não foi encontrada')
-def contagem_regressiva_alertas(id):
-    carregar_dados_atv()
-    string_id = str(id)
-    animais_encontrados = []
-    for i in dados_atividades[1:]:
-        if i[0] == string_id:
-            animais_encontrados.append(i)
-    if not animais_encontrados:
-        print(f"Nenhuma atividade pendente foi encontrada para este respectivo animal")
-        return
-    print(f"\n---- ALERTAS PARA O ANIMAL COM ID {id} ---\n")
-    dia_hoje = datetime.today()
-    for i in animais_encontrados:
-        try:
-            nome_atv = i[2]
-            data_atv = datetime.strptime(i[3], "%d/%m/%Y")
-            responsavel_animal = i[4]
-            diferenca_dias = (data_atv - dia_hoje).days 
-            if diferenca_dias < 0:
-                print(f"ATRASADA --> {nome_atv} | Responsável pelo animal: {responsavel_animal} | Consulta prevista há: {abs(diferenca_dias)} dia(s)")
-            elif diferenca_dias == 0:
-                print(f"É HOJE A CONSULTA --> {nome_atv} | Responsável pelo animal: {responsavel_animal} | Consulta prevista para hoje.")
-            elif diferenca_dias <=7:
-                print(f"FALTA POUCO TEMPO --> {nome_atv} | Responsável pelo animal: {responsavel_animal} | Consulta prevista para {diferenca_dias} dia(s)")
-            else:
-                print(f"AINDA HÁ TEMPO --> {nome_atv} | Responsável pelo animal: {responsavel_animal} | Consulta prevista para {diferenca_dias} dia(s)")
-        except ValueError:
-            print(f"Data inválida na atividade '{i[2]}', vamos pular isso.")
-            continue
+
 
             
 
