@@ -67,7 +67,6 @@ def carregar_dados_atv():
         leitor = csv.reader(dados)
         return list(leitor)
 
-<<<<<<< HEAD
 # item 1
 def cadastro_animal(id,nome, especie, raca, idade, saude, chegada, comportamento):
     dados_animais=carregar_dados()
@@ -103,25 +102,9 @@ def cadastro_atividade(id,id_atv, nome_atv, data, responsavel):
         salvar_atividades(dados_atividades)
     else:
         print("id inválido\n")
-=======
-
-def cadastro_animal(id, nome, especie, raca, idade, saude, llegada, comportamento):
-    dados_animais = carregar_dados()
-    id_string = str(id)
-    
-    for animal in dados_animais[1:]:
-        if animal[ID] == id_string:
-            print("ID já cadastrado!")
-            return
-
-    dados_animal = [id, nome, especie, raca, idade, saude, llegada, comportamento]
-    salvar_dados(dados_animal)
-    print("Animal cadastrado com sucesso!")
->>>>>>> 25178ece53839738ea507a0f179cafe29680ea4a
 
 
 def listar_animais():   
-<<<<<<< HEAD
     dados_animais=carregar_dados()
     existe=0
     for i in dados_animais:
@@ -144,39 +127,13 @@ def listar_atividades():
             print(f" Data da atividade:{i[3]}")
             print(f" Nome do responsável:{i[4]}")
             existe+=1
-=======
-    dados_animais = carregar_dados()
-    if len(dados_animais) <= 1:
-        print("Lista de animais vazia.")
-        return
-    
-    for animal in dados_animais[1:]:
-        print(f"\nID: {animal[ID]}")
-        print(f"Nome: {animal[NOME]}")
-        print(f"Espécie: {animal[ESPECIE]}")
-        print(f"Raça: {animal[RACA]}")
-        print(f"Idade: {animal[IDADE]}")
-        print(f"Estado de Saúde: {animal[SAUDE]}")
-        print(f"Chegada: {animal[CHEGADA]}")
-        print(f"Comportamento: {animal[COMPORTAMENTO]}")
-
->>>>>>> 25178ece53839738ea507a0f179cafe29680ea4a
 
 def busca_especifica_nome(nome):
-<<<<<<< HEAD
     encontrados = []
     dados_animais=carregar_dados()
     for i in dados_animais:
         if i[1].lower() == nome.lower():
             encontrados.append(i)
-=======
-    dados_animais = carregar_dados()
-    encontrados = []
-
-    for animal in dados_animais[1:]:
-        if animal[NOME].lower() == nome.lower():
-            encontrados.append(animal)
->>>>>>> 25178ece53839738ea507a0f179cafe29680ea4a
     
     if len(encontrados)!=0:
         print(f"\nResultados para {nome}: {len(encontrados)} encontrado(s)")
@@ -191,7 +148,6 @@ def busca_especifica_nome(nome):
 
 
 def busca_especifica_id(id):
-<<<<<<< HEAD
     id_string=str(id)
     dados_animais=carregar_dados()
     existe=0
@@ -257,24 +213,6 @@ def editar_animal(id,nome, especie, raca, idade, saude, chegada, comportamento):
     with open('dados_animais', 'w', newline="", encoding="utf-8") as arq:
         escritor = csv.writer(arq)
         escritor.writerows(temp_dados_animais)
-=======
-    dados_animais = carregar_dados()
-    string_id = str(id)
-    
-    for animal in dados_animais[1:]:
-        if animal[ID] == string_id:
-            print("\nAnimal encontrado:")
-            print(f"ID: {animal[ID]}")
-            print(f"Nome: {animal[NOME]}")
-            print(f"Espécie: {animal[ESPECIE]}")
-            print(f"Raça: {animal[RACA]}")
-            print(f"Estado de saúde: {animal[SAUDE]}")
-            print(f"Comportamento: {animal[COMPORTAMENTO]}")
-            return True
-            
-    print(f"O animal de ID {id} não foi localizado.")
-    return False
->>>>>>> 25178ece53839738ea507a0f179cafe29680ea4a
 
 
 def editar_animal(id):
@@ -335,6 +273,30 @@ def excluir_i(id):
     else:
         print(f'O animal com ID {id} não foi encontrado.')
 
+
+def excluir_atividade(id_atv):
+    dados_atividades = carregar_dados_atv()
+    string_id = str(id_atv)
+    temp_dados_atividades = [dados_atividades[0]]
+    atividade_alvo = None
+
+    for atv in dados_atividades[1:]:
+        if atv[ATV_ID_ATIVIDADE] == string_id:
+            atividade_alvo = atv
+            continue
+        temp_dados_atividades.append(atv)
+
+    if atividade_alvo:
+        confirmacao = input(f"Deseja excluir a atividade {atividade_alvo[ATV_NOME]}? (sim/nao): ")
+        if confirmacao.lower() in ['s', 'sim']:
+            with open('dados_atividades.csv', 'w', newline="", encoding="utf-8") as arq:
+                escritor = csv.writer(arq)
+                escritor.writerows(temp_dados_atividades)
+            print("Atividade deletada com sucesso.")
+        else:
+            print('Operação cancelada.')
+    else:
+        print(f'A atividade com ID {id_atv} não foi encontrada.')
 
 def cadastro_atividade(id, id_atv, nome_atv, data, responsavel):
     dados_animais = carregar_dados()
@@ -545,10 +507,16 @@ Escolha uma opção: """)
                 editar_animal(id)
             except ValueError:
                 print("ID inválido.")
-        elif opcao == '9' or 'exclui' in opcao.lower():
+        elif opcao == '9' or 'excluir animal' in opcao.lower():
             try:
                 id = int(input('Digite o id do animal a ser excluído: '))
                 excluir_i(id)
+            except ValueError:
+                print("ID inválido.")
+        elif opcao == '10' or 'excluir atividade' in opcao.lower():
+            try:
+                id_atv=input("id da atividade: ")
+                excluir_atividade(id_atv)
             except ValueError:
                 print("ID inválido.")
         elif opcao == '11' or 'sair' in opcao.lower():
