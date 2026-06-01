@@ -81,29 +81,6 @@ def cadastro_animal(id,nome, especie, raca, idade, saude, chegada, comportamento
         salvar_dados(dados_animal)
         print("Cadastrado com sucesso!  ")
 
-#item 2
-def cadastro_atividade(id,id_atv, nome_atv, data, responsavel):
-    dados_atividades=carregar_dados_atv()
-    dados_animais=carregar_dados()
-    id_string=str(id)
-    existe=0
-    existe_animal=0
-    for i in dados_animais:
-        if id in i:
-            print("id inválido\n")
-            existe_animal=1
-    for i in dados_atividades:
-        if id_atv in i:
-            print("id da atividade inválido\n")
-            existe=1
-    if existe ==0 and existe_animal==1:
-        dados_atividades=[id,id_atv, nome_atv, data, responsavel]
-        print("Cadastrado com sucesso!\n")
-        salvar_atividades(dados_atividades)
-    else:
-        print("id inválido\n")
-
-
 def listar_animais():   
     dados_animais=carregar_dados()
 
