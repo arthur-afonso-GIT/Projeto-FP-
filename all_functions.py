@@ -156,17 +156,17 @@ def busca_especifica_nome(nome):
 def busca_especifica_id(id):
     id_string=str(id)
     dados_animais=carregar_dados()
-    existe=0
-    for i in dados_animais:
-        if id_string==i[0]:
-            print(f"Animal encontrado: {i[0]}")
-            print(f" espécie: {i[1]}")
-            print(f" raça: {i[2]}")
-            print(f" Estado de saúde: {i[3]}")
-            print(f" comportamento: {i[4]}")
-            existe=1
-    if existe==0:
-        print(f"O animal de ID {id} não foi localizado")
+
+    for i in dados_animais[1:]:
+        if id_string==i[ID]:
+            print(f"\nID: {i[ID]}")
+            print(f"Nome: {i[NOME]}")
+            print(f"Espécie: {i[ESPECIE]}")
+            print(f"Raça: {i[RACA]}")
+            print(f"Saúde: {i[SAUDE]}")
+            return True
+    print(f"O animal com o id {id} não foi encontrado.")
+    return False
 
 # item 6
 def busca_atv_id_i(id):
