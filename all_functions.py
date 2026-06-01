@@ -148,6 +148,7 @@ def busca_especifica_id(id):
 # item 6
 def busca_atv_id_i(id):
     dados_atividades=carregar_dados_atv()
+    ciclos = 0
     for i in dados_atividades:
         if id in i:
             print(f" ID da atividade: {i[0]}")
@@ -161,6 +162,7 @@ def busca_atv_id_i(id):
 # item 6
 def busca_atv_nome_atividade(nome_atv):
     dados_atividades=carregar_dados_atv()
+    ciclos = 0
     for i in dados_atividades:
         if nome_atv in i:
             print(f" ID do do animal: {i[0]}")
