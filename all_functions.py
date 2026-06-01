@@ -106,16 +106,22 @@ def cadastro_atividade(id,id_atv, nome_atv, data, responsavel):
 
 def listar_animais():   
     dados_animais=carregar_dados()
-    existe=0
-    for i in dados_animais:
-            if existe>0:
-                print(f" id: {i[0]}")
-                print(f" espécie: {i[1]}")
-                print(f" raça: {i[2]}")
-                print(f" Estado de saúde: {i[3]}")
-                print(f" comportamento: {i[4]}")
-                print(f" Nome: {i[5]}")
-                existe+=1
+
+    if len(dados_animais) <=1:
+        print("A lista de animais está vazia.")
+        return
+    
+    for i in dados_animais[1:]:
+            print(f" id: {i[ID]}")
+            print(f" Nome: {i[NOME]}")
+            print(f" Idade: {i[IDADE]}")
+            print(f" espécie: {i[ESPECIE]}")
+            print(f" raça: {i[RACA]}")
+            print(f" Estado de saúde: {i[SAUDE]}")
+            print(f" comportamento: {i[COMPORTAMENTO]}")
+            print(f" Data de chegada: {i[SAUDE]}")
+            print("-" * 30)
+
 #item 4
 def listar_atividades():
     dados_atividades=carregar_dados_atv()
