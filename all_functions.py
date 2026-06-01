@@ -172,7 +172,7 @@ def busca_atv_nome_atividade(nome_atv):
         print("id não existe\n")
     
 # item 7
-def editar_animal(id,nome, especie, raca, idade, saude, chegada, comportamento):
+def editar_animal_1(id,nome, especie, raca, idade, saude, chegada, comportamento):
     dados_animais=carregar_dados()
     temp_dados_animais=[]
     string_id=str(id)
@@ -198,7 +198,7 @@ def editar_animal(id,nome, especie, raca, idade, saude, chegada, comportamento):
         escritor.writerows(temp_dados_animais)
 
 
-def editar_animal(id):
+def editar_animal_2(id):
     dados_animais = carregar_dados()
     string_id = str(id)
     temp_dados_animais = [dados_animais[0]]
