@@ -1,10 +1,11 @@
 import all_functions as af
+import os
 
-dados_animais=[]
-dados_atividades=[]
+if not os.path.exists("dados_animais.csv"):
+    af.criar_dados_animais()
 
-af.criar_dados_animais()
-af.criar_dados_atividades()
+if not os.path.exists("dados_atividades.csv"):
+    af.criar_dados_atividades()
 
 af.carregar_dados()
 af.carregar_dados_atv()
