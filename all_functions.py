@@ -518,7 +518,7 @@ Escolha uma opção: """)
                 editar_animal_2(id)
             except ValueError:
                 print("ID inválido.")
-        elif opcao == '8' or 'editar atividade' in opcao.lower()
+        elif opcao == '8' or 'editar atividade' in opcao.lower():
             try:
                 id_atv = int(input("Digite o id da atividade que você deseja editar: "))
                 editar_atividade(id_atv)
