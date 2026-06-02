@@ -496,6 +496,7 @@ O que você deseja fazer?
 7 - Editar cadastro de animal
 8 - Editar atividade
 9 - Excluir cadastro de animal
+10 - Excluir atividade
 11 - Sair
     
 Escolha uma opção: """)
