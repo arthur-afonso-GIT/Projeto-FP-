@@ -337,7 +337,7 @@ def editar_atividade(id_atv):
         ]
         temp_dados_atv.append(atv)
         if encontrado:
-            with open("dados_atividades.csv", "w", newline="", enconding = "utf-8") as arquivo:
+            with open("dados_atividades.csv", "w", newline="", encoding = "utf-8") as arquivo:
                 escritor = csv.writer(arquivo)
                 escritor.writerow(temp_dados_atv)
 def busca_atv_id_i(id):
