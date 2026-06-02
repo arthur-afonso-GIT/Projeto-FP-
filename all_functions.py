@@ -497,7 +497,8 @@ O que você deseja fazer?
 8 - Editar atividade
 9 - Excluir cadastro de animal
 10 - Excluir atividade
-11 - Sair
+11 - Sugestões personalizadas
+12 - Sair
     
 Escolha uma opção: """)
 
@@ -531,14 +532,91 @@ Escolha uma opção: """)
                 excluir_i(id)
             except ValueError:
                 print("ID inválido.")
+
         elif opcao == '10' or 'excluir atividade' in opcao.lower():
             try:
                 id_atv=input("id da atividade: ")
                 excluir_atividade(id_atv)
             except ValueError:
                 print("ID inválido.")
-        elif opcao == '11' or 'sair' in opcao.lower():
-            print("Encerrando sistema.")
+
+        elif opcao  == '11'  or 'sugestao' in opcao.lower() or 'sugestão'  in opcao.lower():
+            dados_animais = carregar_dados()
+            id_buscado = input("Digite o ID do animal: ")
+            encontrado = False
+
+            for i in dados_animais:
+
+                if len(i) < 8:
+                    continue
+                if i[ID] == id_buscado:
+                    especie = i[ESPECIE]
+                    idade = int(i[IDADE])
+                    comportamento = i[COMPORTAMENTO]
+
+            sugestao_personalizada(especie, idade, comportamento)
+            encontrado = True
             break
-        else:
-            print('A opção selecionada não foi encontrada.')
+        
+            if not encontrado:
+                print("Animal não encontrado.")
+            
+            elif opcao == '12' or 'sair' in opcao.lower():
+                print("Encerrando sistema.")
+                break
+            else:
+                print('A opção selecionada não foi encontrada.')
+
+def sugestao_personalizada(especie, idade, comportamento):
+    especie = especie.lower()
+    comportamento  = comportamento.lower()
+    adotantes =  []
+    cuidados = []
+    compatibilidade = []
+    atividades = []
+
+    if comportamento  == "bravo" or comportamento  ==  "agressivo":
+        adotantes.append("Tutores experientes, sem crianças ou outros animais em casa.")
+    elif comportamento ==  "agitado"  or comportamento == "brincalhão":
+        adotantes.append("Famílias  agitadas, casa com quintal e família disposta a brincar e passear  todos os dias.")
+    elif comportamento == "tímido"  or  comportamento  == "assustado":
+        adotantes.append("Famílias calmas, rotina tranquila e tutores pacientes.")
+    else:
+        print("compatibilidade não encontrada")
+    
+    
+    if idade <= 1:
+        cuidados.append("Necessita de vacinação em dia e acompanhamento do crescimento.")
+        atividades.append("Brincadeiras aducaivas e adestramento")
+    elif idade >= 8:
+        cuidados.append("Realizar check-ups veterinários periódicos.")
+        atividades.append("Exercícios leves e caminhadas diarias.")
+    else:
+        cuidados.append("Manter vacinas anuais e alimentação balanceada para a fase adulta.")
+        atividades.append("Passeios diários.")
+
+    if especie == "cachorro":
+        compatibilidade.append("Rotina de alimentação equilibrada e passeios/brincadeiras diarias.")
+    elif especie == "gato":
+        compatibilidade.append("Telagem nas janelas e adição de objetos verticais na casa.")
+    else:
+        print("compatibilidade não encontrada")
+
+    print(f"\n=== Sugestões Personalizadas  ===")
+    
+    print("\n•Possível adotante: ")
+    for item in adotantes:
+        print("-", item)
+
+    print("\n•Cuidados especiais:  ")
+    for item in cuidados:
+        print("-", item)
+
+    print("\n•Compatibilidade: ")
+    for item in compatibilidade:
+        print("-", item)
+
+    print("\n•Atividades recomendadas: ")
+    for item in atividades:
+        print("-", item)
+print('A opção selecionada não foi encontrada.')
