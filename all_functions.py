@@ -314,7 +314,32 @@ def listar_atividades():
         print(f"Data da Atividade: {atv[ATV_DATA]}")
         print(f"Nome do Responsável: {atv[ATV_RESPONSAVEL]}")
 
+def editar_atividade(id_atv):
+    dados_atividade = carregar_dados_atv()
+    string_id = str(id_atv)
+    temp_dados_atv = [dados_atividade[0]]
+    encontrado = False
 
+    for atv in dados_atividade[1:]:
+        if atv[ATV_ID_ATIVIDADE] == string_id:
+            encontrado = True
+            
+            nome_novo = input(f"Novo nome [{atv[ATV_NOME]}]: " or atv[ATV_NOME])
+            data_nova = input(f"Nova data [{atv[ATV_DATA]}]: " or atv[ATV_DATA])
+            responsavel_novo = input(f"Novo responsável [{atv[ATV_RESPONSAVEL]}]: " or atv[ATV_RESPONSAVEL])
+
+        atv = [
+            atv[ATV_ID_ANIMAL],
+            atv[ATV_ID_ATIVIDADE],
+            nome_novo,
+            data_nova,
+            responsavel_novo
+        ]
+        temp_dados_atv.append(atv)
+        if encontrado:
+            with open("dados_atividades.csv", "w", newline="", enconding = "utf-8") as arquivo:
+                escritor = csv.writer(arquivo)
+                escritor.writerow(temp_dados_atv)
 def busca_atv_id_i(id):
     dados_atividades = carregar_dados_atv()
     string_id = str(id)
@@ -469,6 +494,7 @@ O que você deseja fazer?
 5 - Buscar animal por ID
 6 - Buscar atividade
 7 - Editar cadastro de animal
+8 - Editar atividade
 9 - Excluir cadastro de animal
 11 - Sair
     
@@ -489,9 +515,15 @@ Escolha uma opção: """)
         elif opcao == '7' or 'editar' in opcao.lower():
             try:
                 id = int(input("Digite o id do cadastro a ser alterado: "))
-                editar_animal(id)
+                editar_animal_2(id)
             except ValueError:
                 print("ID inválido.")
+        elif opcao == '8' or 'editar atividade' in opcao.lower()
+            try:
+                id_atv = int(input("Digite o id da atividade que você deseja editar: "))
+                editar_atividade(id_atv)
+            except ValueError:
+                print("O id digitado está inválido ou não existe, tente novamente.")
         elif opcao == '9' or 'excluir animal' in opcao.lower():
             try:
                 id = int(input('Digite o id do animal a ser excluído: '))
