@@ -1,12 +1,155 @@
-import all_functions as af
 import os
+from persistencia import criar_dados_animais, criar_dados_atividades, carregar_dados
+from constantes import ID, ESPECIE, IDADE, COMPORTAMENTO
+from funcoes import *
 
-if not os.path.exists("dados_animais.csv"):
-    af.criar_dados_animais()
+def menu_cadastro_animal():
+    while True:
+        try:
+            id = gerar_id_aleatorio('animal')
+            nome = input("Digite o nome do animal: ")
+            especie = input("Digite a especie do animal: ")
+            raca = input("Digite a raça do animal: ")
+            idade = int(input("Digite a idade do animal: "))
+            saude = input("Digite o estado de saude do animal: ")
+            chegada = input("Digite a data de chegada do animal (dd/mm/aaaa): ")
+            comportamento = input("Digite o comportamento do animal: ")
 
-if not os.path.exists("dados_atividades.csv"):
-    af.criar_dados_atividades()
+            cadastro_animal(id, nome, especie, raca, idade, saude, chegada=chegada, comportamento=comportamento)
+            print(f"Animal cadastrado com ID: {id}")
+            break
+        except ValueError:
+            print("Algum dos dados inseridos foi inválido, tente novamente.")
 
-af.carregar_dados()
-af.carregar_dados_atv()
-af.menu()
+def menu_cadastro_atividade():
+    while True:
+        try:
+            id = int(input("Digite o id do animal: "))
+            id_atv = gerar_id_aleatorio('atividade')
+            nome_atv = input("Digite o nome da atividade: ")
+            data = input("Digite a data de realização (dd/mm/aaaa): ")
+            responsavel = input("Digite o nome do responsável: ")
+
+            cadastro_atividade(id, id_atv, nome_atv, data, responsavel)
+            print(f"Atividade cadastrada com ID: {id_atv}")
+            break
+        except ValueError:
+            print("Algum dos dados inseridos foi inválido, tente novamente.")
+
+def menu_busca_animal():
+    while True:
+        escolha = input("Tipo de busca:\n1 - Nome\n2 - ID\nEscolha: ")
+        if escolha == '1' or escolha.lower() == "nome":
+            nome_buscado = input("Digite o nome a ser buscado: ")
+            busca_especifica_nome(nome_buscado)
+            break
+        elif escolha == '2' or escolha.lower() == "id":
+            try:
+                id = int(input("Digite o ID: "))
+                if busca_especifica_id(id):
+                    contagem_regressiva_alertas(id)
+                break
+            except ValueError:
+                print("Entrada inválida.")
+        else:
+            print("Valor inválido.")
+
+def menu_busca_atividade():
+    while True:
+        escolha = input("Forma de busca:\n1 - ID do animal\n2 - Nome da atividade\nEscolha: ")
+        if escolha == '1' or escolha.lower() == "id":
+            try:
+                id = int(input("Digite o ID do animal: "))
+                busca_atv_id_i(id)
+                break
+            except ValueError:
+                print("Entrada inválida.")
+        elif escolha == '2' or escolha.lower() == "nome":
+            nome_atv = input("Digite o nome da atividade a ser buscado: ")
+            busca_atv_nome_atividade(nome_atv)
+            break
+        else:
+            print("Valor inválido.")
+
+def menu():
+    while True:
+        opcao = input("""
+O que você deseja fazer?
+
+1 - Cadastrar animal
+2 - Cadastrar atividades
+3 - Listar animais
+4 - Listar atividades
+5 - Buscar animal por ID
+6 - Buscar atividade
+7 - Editar cadastro de animal
+8 - Editar atividade
+9 - Excluir cadastro de animal
+10 - Excluir atividade
+11 - Sugestões personalizadas
+12 - Sair
+    
+Escolha uma opção: """)
+
+        if opcao == '1' or ('cadastro' in opcao.lower() and 'atv' not in opcao.lower()):
+            menu_cadastro_animal()
+        elif opcao == '2' or ('atividade' in opcao.lower() and 'cadastrar' in opcao.lower()):
+            menu_cadastro_atividade()
+        elif opcao == '3' or 'lista animais' in opcao.lower():
+            listar_animais()
+        elif opcao == '4' or 'lista atividades' in opcao.lower():
+            listar_atividades()
+        elif opcao == '5' or 'buscar animal' in opcao.lower():
+            menu_busca_animal()
+        elif opcao == '6' or 'buscar atividade' in opcao.lower():
+            menu_busca_atividade()
+        elif opcao == '7' or 'editar' in opcao.lower() and 'atividade' not in opcao.lower():
+            try:
+                id = int(input("Digite o id do cadastro a ser alterado: "))
+                editar_animal_2(id)
+            except ValueError:
+                print("ID inválido.")
+        elif opcao == '8' or 'editar atividade' in opcao.lower():
+            try:
+                id_atv = int(input("Digite o id da atividade que você deseja editar: "))
+                editar_atividade(id_atv)
+            except ValueError:
+                print("O id digitado está inválido ou não existe, tente novamente.")
+        elif opcao == '9' or 'excluir animal' in opcao.lower():
+            try:
+                id = int(input('Digite o id do animal a ser excluído: '))
+                excluir_i(id)
+            except ValueError:
+                print("ID inválido.")
+        elif opcao == '10' or 'excluir atividade' in opcao.lower():
+            try:
+                id_atv = int(input("id da atividade: "))
+                excluir_atividade(id_atv)
+            except ValueError:
+                print("ID inválido.")
+        elif opcao == '11' or 'sugestao' in opcao.lower() or 'sugestão' in opcao.lower():
+            dados_animais = carregar_dados()
+            id_buscado = input("Digite o ID do animal: ")
+            encontrado = False
+
+            for i in dados_animais:
+                if len(i) < 8:
+                    continue
+                if i[ID] == id_buscado:
+                    sugestao_personalizada(especie=i[ESPECIE], idade=int(i[IDADE]), comportamento=i[COMPORTAMENTO])
+                    encontrado = True
+                    break
+            if not encontrado:
+                print("Animal não encontrado.")
+        elif opcao == '12' or 'sair' in opcao.lower():
+            print("Encerrando sistema.")
+            break
+        else:
+            print('A opção selecionada não foi encontrada.')
+
+if __name__ == "__main__":
+    if not os.path.exists("dados/dados_animais.csv"):
+        criar_dados_animais()
+    if not os.path.exists("dados/dados_atividades.csv"):
+        criar_dados_atividades()
+    menu()
