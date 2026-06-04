@@ -87,7 +87,8 @@ O que você deseja fazer?
 9 - Excluir cadastro de animal
 10 - Excluir atividade
 11 - Sugestões personalizadas
-12 - Sair
+12 - Exibir ranking de aptidão                      
+13 - Sair
     
 Escolha uma opção: """)
 
@@ -141,7 +142,9 @@ Escolha uma opção: """)
                     break
             if not encontrado:
                 print("Animal não encontrado.")
-        elif opcao == '12' or 'sair' in opcao.lower():
+        elif opcao == '12' or 'ranking' in opcao.lower():
+            ranking_aptidao()
+        elif opcao == '13' or 'sair' in opcao.lower():
             print("Encerrando sistema.")
             break
         else:
