@@ -149,8 +149,8 @@ Escolha uma opção: """)
             print('A opção selecionada não foi encontrada.')
 
 if __name__ == "__main__":
-    if not os.path.exists("dados/dados_animais.csv"):
+    if not os.path.exists("dados_animais.csv"):
         criar_dados_animais()
-    if not os.path.exists("dados/dados_atividades.csv"):
+    if not os.path.exists("dados_atividades.csv"):
         criar_dados_atividades()
     menu()  
