@@ -132,9 +132,7 @@ Escolha uma opção: """)
             id_buscado = input("Digite o ID do animal: ")
             encontrado = False
 
-            for i in dados_animais:
-                if len(i) < 8:
-                    continue
+            for i in dados_animais[1:]:  
                 if i[ID] == id_buscado:
                     sugestao_personalizada(especie=i[ESPECIE], idade=int(i[IDADE]), comportamento=i[COMPORTAMENTO])
                     encontrado = True
