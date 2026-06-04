@@ -103,11 +103,11 @@ def busca_atv_id_i(id):
     if ciclos == 0:
         print("Nenhuma atividade encontrada para este ID.\n")
 
-def busca_atv_nome_atividade(nome_atv):
+def busca_atv_nome_atividade(id_atv):
     dados_atividades = carregar_dados_atv()
     ciclos = 0
     for i in dados_atividades[1:]:
-        if nome_atv.lower() in i[ATV_NOME].lower():
+        if id_atv in i[ATV_ID_ATIVIDADE]:
             print(f" ID do Animal: {i[ATV_ID_ANIMAL]}")
             print(f" ID da Atividade: {i[ATV_ID_ATIVIDADE]}")
             print(f" Nome da Atividade: {i[ATV_NOME]}")
