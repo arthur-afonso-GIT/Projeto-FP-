@@ -317,3 +317,67 @@ def  sugestao_personalizada(especie, idade, comportamento):
     print(f"• Cuidados especiais: {cuidados[0]}")
     print(f"• Compatibilidade: {compatibilidade[0]}")
     print(f"• Atividades recomendadas: {atividades[0]}")
+
+def ranking_aptidao():
+    dados_animais = carregar_dados()
+    ranking = []
+    
+    pontuacao_saude = {
+        "boa": 20,
+        "saudável": 20,
+        "ótima": 20,
+        "regular": 10,
+        "precisa de atenção leve": 10,
+        "ruim": 5,
+        "precisa de muita atenção": 5
+    }
+
+    pontuacao_comportamento = {
+        "dócil": 30,
+        "brincalhão": 30,
+        "calmo": 30,
+        "agressivo": 5
+    }
+    
+    if len(dados_animais) <= 1:
+        print("Nenhum animal cadastrado.")
+        return
+    
+    for animal in dados_animais[1:]:
+
+        saude = animal[SAUDE].strip().lower()
+        comportamento = animal[COMPORTAMENTO].strip().lower()
+
+        pontos = 0
+        pontos += pontuacao_saude.get(saude, 0)
+        pontos += pontuacao_comportamento.get(comportamento, 0)
+
+        ranking.append([
+            animal[NOME],
+            animal[ESPECIE],
+            saude,
+            comportamento,
+            pontos
+        ])
+
+    for i in range(len(ranking)):
+        for j in range(i + 1, len(ranking)):
+            if ranking[j][4] > ranking[i][4]:
+                ranking[i], ranking[j] = ranking[j], ranking[i]
+
+    print(f"\n=== Ranking de Animais Mais Aptos Para Adoção ===")
+
+    for animal in ranking:
+        if animal[4] >= 50:
+            aptidao = "Muito apto para adoção."
+        elif animal[4] >= 40:
+            aptidao = "Medianamente apto para adoção."
+        else:
+            aptidao = "Pouco apto para adoção."
+
+        print(f"Nome: {animal[0]}")
+        print(f"Espécie: {animal[1]}")
+        print(f"Saúde: {animal[2]}")
+        print(f"Comportamento: {animal[3]}")
+        print(f"Aptidão: {aptidao}")
+        print("-" * 30)
