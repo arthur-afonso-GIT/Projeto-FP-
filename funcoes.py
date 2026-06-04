@@ -59,7 +59,7 @@ def listar_atividades():
 def busca_especifica_nome(nome):
     encontrados = []
     dados_animais = carregar_dados()
-    for i in dados_animais:
+    for i in dados_animais[1:]:
         if i[NOME].lower() == nome.lower():
             encontrados.append(i)
     
