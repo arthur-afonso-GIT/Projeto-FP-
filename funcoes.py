@@ -118,7 +118,7 @@ def busca_atv_nome_atividade(id_atv):
     if ciclos == 0:
         print("Nenhuma atividade com esse nome foi encontrada.\n")
 
-def editar_animal_2(id):
+def editar_animal(id):
     dados_animais = carregar_dados()
     string_id = str(id)
     temp_dados_animais = [dados_animais[0]]
