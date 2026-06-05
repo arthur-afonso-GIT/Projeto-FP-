@@ -41,8 +41,11 @@ def menu_busca_animal():
         escolha = input("Tipo de busca:\n1 - Nome\n2 - ID\nEscolha: ")
         if escolha == '1' or escolha.lower() == "nome":
             nome_buscado = input("Digite o nome a ser buscado: ")
-            busca_especifica_nome(nome_buscado)
-            break
+            encontrados = busca_especifica_nome(nome_buscado)
+            if encontrados:
+                for animal in encontrados:
+                    contagem_regressiva_alertas(int(animal[ID]))
+            break   
         elif escolha == '2' or escolha.lower() == "id":
             try:
                 id = int(input("Digite o ID: "))

@@ -73,6 +73,8 @@ def busca_especifica_nome(nome):
             print(f"Saúde: {i[SAUDE]}")
     else:
         print(f"\nNenhum animal chamado '{nome}' foi localizado.")
+        
+    return encontrados
 
 def busca_especifica_id(id):
     id_string = str(id)
