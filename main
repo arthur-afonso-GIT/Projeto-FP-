@@ -135,12 +135,14 @@ Escolha uma opção: """)
             dados_animais = carregar_dados()
             id_buscado = input("Digite o ID do animal: ")
             encontrado = False
-
-            for i in dados_animais[1:]:  
-                if i[ID] == id_buscado:
-                    sugestao_personalizada(especie=i[ESPECIE], idade=int(i[IDADE]), comportamento=i[COMPORTAMENTO])
-                    encontrado = True
-                    break
+            for i in dados_animais[1:]:
+             if i[ID] == id_buscado:
+                sugestao_personalizada(
+                especie=i[ESPECIE],
+                idade=int(i[IDADE]),
+                comportamento=i[COMPORTAMENTO]) 
+            encontrado = True
+            break
             if not encontrado:
                 print("Animal não encontrado.")
         elif opcao == '12' or 'ranking' in opcao.lower():
