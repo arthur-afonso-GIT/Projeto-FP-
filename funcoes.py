@@ -336,8 +336,14 @@ def ranking_aptidao():
 
     pontuacao_comportamento = {
         "dócil": 30,
+        "docil": 30,
         "brincalhão": 30,
+        "brincalhao": 30,
         "calmo": 30,
+        "agitado": 20,
+        "tímido": 20,
+        "assustado":10,
+        "bravo": 5,
         "agressivo": 5
     }
     

@@ -11,7 +11,7 @@ def menu_cadastro_animal():
             especie = input("Digite a especie do animal: ")
             raca = input("Digite a raça do animal: ")
             idade = int(input("Digite a idade do animal: "))
-            saude = input("Digite o estado de saude do animal: ")
+            saude = input("Digite o estado de saúde do animal: ")
             chegada = input("Digite a data de chegada do animal (dd/mm/aaaa): ")
             comportamento = input("Digite o comportamento do animal: ")
 
@@ -90,7 +90,7 @@ O que você deseja fazer?
 9 - Excluir cadastro de animal
 10 - Excluir atividade
 11 - Sugestões personalizadas
-12 - Exibir ranking de aptidão                      
+12 - Exibir ranking de aptidão 
 13 - Sair
     
 Escolha uma opção: """)
@@ -143,7 +143,7 @@ Escolha uma opção: """)
                     break
             if not encontrado:
                 print("Animal não encontrado.")
-        elif opcao == '12' or 'ranking' in opcao.lower():
+        elif opcao == '12' or 'ranking de aptidão' in opcao.lower() or 'ranking de aptidao' in opcao.lower():
             ranking_aptidao()
         elif opcao == '13' or 'sair' in opcao.lower():
             print("Encerrando sistema.")
