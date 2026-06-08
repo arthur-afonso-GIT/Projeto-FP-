@@ -1,4 +1,5 @@
 import os
+import csv
 from persistencia import criar_dados_animais, criar_dados_atividades, carregar_dados
 from constantes import ID, ESPECIE, IDADE, COMPORTAMENTO
 from funcoes import *
@@ -90,8 +91,11 @@ O que você deseja fazer?
 9 - Excluir cadastro de animal
 10 - Excluir atividade
 11 - Sugestões personalizadas
-12 - Exibir ranking de aptidão                      
-13 - Sair
+12 - Exibir ranking de aptidão 
+13 - cadastrar funcionário
+14 - adicionar pontos a funcionário
+15 - Ranking de funcionários                     
+16 - Sair
     
 Escolha uma opção: """)
 
@@ -144,16 +148,32 @@ Escolha uma opção: """)
             if not encontrado:
                 print("Animal não encontrado.")
         elif opcao == '12' or 'ranking' in opcao.lower():
-            ranking_aptidao()
-        elif opcao == '13' or 'sair' in opcao.lower():
-            print("Encerrando sistema.")
-            break
-        else:
-            print('A opção selecionada não foi encontrada.')
+                    ranking_aptidao()
+        elif opcao == '13':
+            nome = input("Digite o nome do funcionário: ")
+            cadastro_funcionario(nome)
+
+        elif opcao == '14':
+            nome = input("Nome do funcionário: ")
+            tarefa = input("Tarefa (banho, vacina ou adocao): ")
+            adicionar_pontos_funcionario(nome, tarefa)
+
+        elif opcao == '15':
+            ranking_funcionarios()
+
+        elif opcao == '16' or 'sair' in opcao.lower():
+            ("Encerrando sistema.")
+        break
 
 if __name__ == "__main__":
     if not os.path.exists("dados_animais.csv"):
         criar_dados_animais()
     if not os.path.exists("dados_atividades.csv"):
         criar_dados_atividades()
+    if not os.path.exists("dados_funcionario.csv"):
+        with open("dados_funcionario.csv", "w", newline="", encoding="utf-8") as arq:
+            escritor = csv.writer(arq)
+            escritor.writerow(["nome", "pontos"])
     menu()  
+
+

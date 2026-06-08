@@ -412,7 +412,7 @@ def adicionar_pontos_funcionario(nome_funcionario, tarefa):
 
     encontrado = False
 
-    for funcionario in dados_funcionarios[:1]:
+    for funcionario in dados_funcionarios[1:]:
         if funcionario[0].lower() == nome_funcionario.lower():
             funcionario[1] = str(int(funcionario[1]) + pontuacoes[tarefa.lower()])
 
@@ -445,7 +445,7 @@ def ranking_funcionarios():
 
     for i in range(len(ranking)):
         for j in range(i+1, len(ranking)):
-            if ranking[j][1] > ranking[j][1]:
+            if ranking[j][1] > ranking[i][1]:
                 ranking[i], ranking[j] =  ranking[j], ranking[i]
 
     print("\n=== Ranking de Funcionários ===")
