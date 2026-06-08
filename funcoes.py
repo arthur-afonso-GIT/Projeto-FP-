@@ -336,8 +336,14 @@ def ranking_aptidao():
 
     pontuacao_comportamento = {
         "dócil": 30,
+        "docil": 30,
         "brincalhão": 30,
+        "brincalhao": 30,
         "calmo": 30,
+        "agitado": 20,
+        "tímido": 20,
+        "assustado":10,
+        "bravo": 5,
         "agressivo": 5
     }
     
@@ -383,3 +389,79 @@ def ranking_aptidao():
         print(f"Comportamento: {animal[3]}")
         print(f"Aptidão: {aptidao}")
         print("-" * 30)
+
+def cadastro_funcionario(nome): 
+    with open("dados_funcionario.csv", "a", newline="", encoding="utf-8") as arq:
+        escritor = csv.writer(arq)
+
+        if arq.tell() == 0:
+            escritor.writerow(["nome","pontos"])
+
+        escritor.writerow([nome, 0])
+    print("Funcionário cadastrado com sucesso!")
+
+def adicionar_pontos_funcionario(nome_funcionario, tarefa):
+    pontuacoes = {
+        "banho": 5,
+        "vacina": 10,
+        "adocao": 20
+    }
+
+    if tarefa.lower() not in pontuacoes:
+        print("Tarefa inválida.")
+        return
+    dados_funcionarios = []
+
+    with open("dados_funcionario.csv", "r", newline="", encoding="utf-8") as arq:
+        leitor = csv.reader(arq)
+        dados_funcionarios = list(leitor)
+
+    encontrado = False
+
+    for funcionario in dados_funcionarios[:1]:
+        if funcionario[0].lower() == nome_funcionario.lower():
+            funcionario[1] = str(int(funcionario[1]) + pontuacoes[tarefa.lower()])
+
+            encontrado = True
+            break
+    
+    if encontrado:
+        with open("dados_funcionario.csv", "w", newline="", encoding="utf-8") as arq:
+            escritor = csv.writer(arq)
+            escritor.writerows(dados_funcionarios)
+
+        print(f"{nome_funcionario} ganhou {pontuacoes[tarefa.lower()]} pontos!")
+
+    else:
+        print("Funcionário não encontrado.")
+
+def ranking_funcionarios():
+    with open("dados_funcionario.csv", "r", newline="", encoding="utf-8") as arq:
+        leitor = csv.reader(arq)
+        dados_funcionarios = list(leitor)
+
+    if len(dados_funcionarios) <= 1:
+        print("nenhum funcionario cadastrado.")
+        return
+
+    ranking = []
+
+    for funcionario in dados_funcionarios[1:]:
+        ranking.append([funcionario[0],int(funcionario[1])])
+
+    for i in range(len(ranking)):
+        for j in range(i+1, len(ranking)):
+            if ranking[j][1] > ranking[j][1]:
+                ranking[i], ranking[j] =  ranking[j], ranking[i]
+
+    print("\n=== Ranking de Funcionários ===")
+
+    posicao = 1
+
+    for funcionario in ranking:
+        print(
+            f"{posicao}º Lugar - "
+            f"{funcionario[0]} - "
+            f"{funcionario[1]} pontos"
+        )
+        posicao += 1
