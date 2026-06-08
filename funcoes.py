@@ -393,10 +393,6 @@ def ranking_aptidao():
 def cadastro_funcionario(nome): 
     with open("dados_funcionario.csv", "a", newline="", encoding="utf-8") as arq:
         escritor = csv.writer(arq)
-
-        if arq.tell() == 0:
-            escritor.writerow(["nome","pontos"])
-
         escritor.writerow([nome, 0])
     print("Funcionário cadastrado com sucesso!")
 
