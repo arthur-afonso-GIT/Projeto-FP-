@@ -164,8 +164,8 @@ Escolha uma opção: """)
             ranking_funcionarios()
 
         elif opcao == '16' or 'sair' in opcao.lower():
-            ("Encerrando sistema.")
-        break
+            print("Encerrando sistema.")
+            break
 
 if __name__ == "__main__":
     if not os.path.exists("dados_animais.csv"):
