@@ -288,11 +288,11 @@ def  sugestao_personalizada(especie, idade, comportamento):
     compatibilidade = []
     atividades = []
 
-    if comportamento == "bravo" or comportamento == "agressivo":
+    if comportamento == "bravo" or comportamento == "agressivo" or comportamento == "raivoso":
         adotantes.append("Tutores experientes, sem crianças ou outros animais em casa.")
-    elif comportamento == "agitado" or comportamento == "brincalhão":
+    elif comportamento == "agitado" or comportamento == "brincalhão" or comportamento == "feliz":
         adotantes.append("Famílias agitadas, casa com quintal e dispostas a passear todos os dias.")
-    elif comportamento == "tímido" or comportamento == "assustado":
+    elif comportamento == "tímido" or comportamento == "assustado" or comportamento == "calmo":
         adotantes.append("Famílias calmas, rotina tranquila e tutores pacientes.")
     else:
         adotantes.append("Qualquer perfil de tutor responsável.")
@@ -336,8 +336,14 @@ def ranking_aptidao():
 
     pontuacao_comportamento = {
         "dócil": 30,
+        "docil": 30,
         "brincalhão": 30,
+        "brincalhao": 30,
         "calmo": 30,
+        "agitado": 20,
+        "tímido": 20,
+        "assustado":10,
+        "bravo": 5,
         "agressivo": 5
     }
     

@@ -12,7 +12,7 @@ def menu_cadastro_animal():
             especie = input("Digite a especie do animal: ")
             raca = input("Digite a raça do animal: ")
             idade = int(input("Digite a idade do animal: "))
-            saude = input("Digite o estado de saude do animal: ")
+            saude = input("Digite o estado de saúde do animal: ")
             chegada = input("Digite a data de chegada do animal (dd/mm/aaaa): ")
             comportamento = input("Digite o comportamento do animal: ")
 
@@ -139,12 +139,14 @@ Escolha uma opção: """)
             dados_animais = carregar_dados()
             id_buscado = input("Digite o ID do animal: ")
             encontrado = False
-
-            for i in dados_animais[1:]:  
+            for i in dados_animais[1:]:
                 if i[ID] == id_buscado:
-                    sugestao_personalizada(especie=i[ESPECIE], idade=int(i[IDADE]), comportamento=i[COMPORTAMENTO])
-                    encontrado = True
-                    break
+                    sugestao_personalizada(
+                    especie=i[ESPECIE],
+                    idade=int(i[IDADE]),
+                    comportamento=i[COMPORTAMENTO]) 
+                encontrado = True
+                break
             if not encontrado:
                 print("Animal não encontrado.")
         elif opcao == '12' or 'ranking' in opcao.lower():
