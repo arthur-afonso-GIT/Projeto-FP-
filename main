@@ -145,8 +145,8 @@ Escolha uma opção: """)
                     especie=i[ESPECIE],
                     idade=int(i[IDADE]),
                     comportamento=i[COMPORTAMENTO]) 
-                encontrado = True
-                break
+                    encontrado = True
+                    break
             if not encontrado:
                 print("Animal não encontrado.")
         elif opcao == '12' or 'ranking' in opcao.lower():
